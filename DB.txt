@@ -32,4 +32,67 @@ title = '제목3',
 `body` = '내용3';
 
 SELECT * FROM article
-ORDER BY id DESC
+order by id desc
+limit 0, 10;
+
+select count(*)
+from article;
+
+insert into article(regDate, updateDate, title, `body`)
+select now(), now(), concat('제목_', rand()), concat('내용_', rand())
+from article
+
+delete from article
+
+truncate article
+
+# member 테이블 생성
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId VARCHAR(50) NOT NULL unique,
+	loginPw VARCHAR(100) NOT NULL,
+	`name` VARCHAR(50) NOT NULL,
+	nickname VARCHAR(50) NOT NULL,
+	cellphoneNum VARCHAR(50) NOT NULL,
+	email VARCHAR(100) NOT NULL
+);
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = 'test1',
+nickname = 'testnick1',
+cellphoneNum = '010000000000',
+email = 'test1@naver.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = 'test2';
+
+DELETE FROM `member`
+
+TRUNCATE `member`
+
+select * from `member`
+order by id desc;
+
+# article, member join
+SELECT *, M.loginId AS writerId
+	FROM article AS A
+JOIN `member` AS M
+	ON A.memberId = M.id
+ORDER BY A.id DESC;
+LIMIT 0, 10;
+
+SELECT * FROM article AS A
+JOIN `member` AS M
+ON A.memberId = M.id
+WHERE A.id = 1;
