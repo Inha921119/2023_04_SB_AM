@@ -24,6 +24,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public Article doAdd(String title, String body) {
+		
 		articleService.writeArticle(title, body);
 		
 		int id = articleService.getLastInsertId();

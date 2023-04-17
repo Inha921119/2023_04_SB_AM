@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.koreaIT.demo.repository.ArticleRepository">
-	
+
 	<insert id="writeArticle">
 		INSERT INTO article
 			SET regDate = NOW(),
@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="getArticleById" resultType="Article">
-		SELECT *
+		SELECT * 
 			FROM article
 			WHERE id = #{id}
 	</select>
@@ -28,11 +28,11 @@
 	</select>
 	
 	<update id="modifyArticle">
-		UPDATE article 
-			SET updateDate = NOW(), 
-				title = #{title}, 
-				`body` = #{body} 
-				WHERE id = #{id}
+		UPDATE article
+				SET updateDate = NOW(),
+				title = #{title},
+				`body` = #{body}
+			WHERE id = #{id}
 	</update>
 	
 	<delete id="deleteArticle">
