@@ -19,9 +19,19 @@ public class MemberService {
 	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 		
 		Member existMember = getMemberByLoginId(loginId);
+		Member existNickname = getMemberByNickname(nickname);
+		Member existNameEmail = getMemberByNameAndEmail(name, email);
 		
 		if (existMember != null) {
 			return -1;
+		}
+		
+		if (existNickname != null) {
+			return -2;
+		}
+		
+		if (existNameEmail != null) {
+			return -3;
 		}
 		
 		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
@@ -29,7 +39,15 @@ public class MemberService {
 		return memberRepository.getLastInsertId();
 	}
 	
-	public Member getMemberByLoginId(String loginId) {
+	private Member getMemberByNameAndEmail(String name, String email) {
+		return memberRepository.getMemberByNameAndEmail(name, email);
+	}
+
+	private Member getMemberByNickname(String nickname) {
+		return memberRepository.getMemberByNickname(nickname);
+	}
+
+	private Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 	
