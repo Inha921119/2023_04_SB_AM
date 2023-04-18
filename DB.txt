@@ -32,42 +32,58 @@ title = '제목3',
 `body` = '내용3';
 
 SELECT * FROM article
-order by id desc
-limit 0, 10;
+ORDER BY id DESC
+LIMIT 0, 10;
 
-select count(*)
-from article;
+SELECT COUNT(*)
+FROM article;
 
-insert into article(regDate, updateDate, title, `body`)
-select now(), now(), concat('제목_', rand()), concat('내용_', rand())
-from article
+INSERT INTO article(regDate, updateDate, title, `body`)
+SELECT NOW(), NOW(), CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
+FROM article
 
-delete from article
+DELETE FROM article
 
-truncate article
+TRUNCATE article
+
+DROP TABLE `member`
 
 # member 테이블 생성
 CREATE TABLE `member`(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
-	loginId VARCHAR(50) NOT NULL unique,
+	loginId VARCHAR(20) NOT NULL UNIQUE,
 	loginPw VARCHAR(100) NOT NULL,
-	`name` VARCHAR(50) NOT NULL,
-	nickname VARCHAR(50) NOT NULL,
-	cellphoneNum VARCHAR(50) NOT NULL,
-	email VARCHAR(100) NOT NULL
+	`authlevel` SMALLINT UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한 레벨 (일반 = 3, 관리자 = 7)',
+	`name` VARCHAR(20) NOT NULL,
+	nickname VARCHAR(20) NOT NULL,
+	cellphoneNum VARCHAR(20) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
+	delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+loginId = 'admin',
+loginPw = 'admin',
+`authlevel` = 7,
+`name` = '관리자',
+nickname = '관리자',
+cellphoneNum = '010-1111-1111',
+email = 'admin@naver.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
-`name` = 'test1',
-nickname = 'testnick1',
-cellphoneNum = '010000000000',
+`name` = 'user1',
+nickname = 'user1',
+cellphoneNum = '010-1234-5678',
 email = 'test1@naver.com';
 
 INSERT INTO `member`
@@ -75,14 +91,17 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
-`name` = 'test2';
+`name` = 'user2',
+nickname = 'user2',
+cellphoneNum = '010-1234-1234',
+email = 'test2@naver.com';
 
 DELETE FROM `member`
 
 TRUNCATE `member`
 
-select * from `member`
-order by id desc;
+SELECT * FROM `member`
+ORDER BY id DESC;
 
 # article, member join
 SELECT *, M.loginId AS writerId
@@ -96,3 +115,5 @@ SELECT * FROM article AS A
 JOIN `member` AS M
 ON A.memberId = M.id
 WHERE A.id = 1;
+
+SELECT LAST_INSERT_ID()

@@ -16,8 +16,8 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	public void joinMember(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		memberRepository.joinMember(loginId, loginPw, name, nickname, cellphoneNum, email);
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 	}
 	
 	public int getLastInsertId() {
