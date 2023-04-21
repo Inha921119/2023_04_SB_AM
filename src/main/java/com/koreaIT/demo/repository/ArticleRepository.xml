@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="getArticles" resultType="Article">
-		SELECT *, M.loginId AS writerId
+		SELECT A.id, A.title, A.body, A.regDate, A.memberId, M.nickName AS writerNickName
 			FROM article AS A
 			JOIN `member` AS M
 			ON A.memberId = M.id
