@@ -22,9 +22,11 @@
 	</select>
 	
 	<select id="getArticles" resultType="Article">
-		SELECT *
-			FROM article
-			ORDER BY id DESC
+		SELECT *, M.loginId AS writerId
+			FROM article AS A
+			JOIN `member` AS M
+			ON A.memberId = M.id
+			ORDER BY A.id DESC;
 	</select>
 	
 	<update id="modifyArticle">
@@ -35,7 +37,7 @@
 					title = #{title},
 				</if>
 				<if test="body != null and body != ''">
-				`body` = #{body}
+					`body` = #{body}
 				</if>
 			</set>
 			WHERE id = #{id}

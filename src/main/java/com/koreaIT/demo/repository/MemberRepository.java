@@ -26,33 +26,32 @@ public interface MemberRepository {
 	public int getLastInsertId();
 
 	@Select("""
-			SELECT * 
+			SELECT *
 				FROM `member`
 				WHERE id = #{id}
 			""")
 	public Member getMemberById(int id);
-	
+
 	@Select("""
-			SELECT * 
+			SELECT *
 				FROM `member`
 				WHERE loginId = #{loginId}
 			""")
 	public Member getMemberByLoginId(String loginId);
-	
+
 	@Select("""
-			SELECT * 
+			SELECT *
 				FROM `member`
 				WHERE nickname = #{nickname}
 			""")
 	public Member getMemberByNickname(String nickname);
 
-	
 	@Select("""
-			SELECT * 
+			SELECT *
 				FROM `member`
-				WHERE name = #{name}
+				WHERE `name` = #{name}
 				AND email = #{email}
 			""")
 	public Member getMemberByNameAndEmail(String name, String email);
-	
+
 }
