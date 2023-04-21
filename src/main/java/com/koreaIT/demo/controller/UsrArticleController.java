@@ -29,7 +29,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData<Article> doAdd(HttpSession httpSession, String title, String body) {
 		
-		if (httpSession.getAttribute("loginMemberId") == null) {
+		if (httpSession.getAttribute("loginedMemberId") == null) {
 			return ResultData.from("F-A", "로그인 후 이용해주세요");
 		}
 		
@@ -41,7 +41,7 @@ public class UsrArticleController {
 			return ResultData.from("F-2", "내용을 입력해주세요");
 		}
 		
-		articleService.writeArticle(title, body, (int) httpSession.getAttribute("loginMemberId"));
+		articleService.writeArticle((int) httpSession.getAttribute("loginedMemberId"), title, body);
 		
 		int id = articleService.getLastInsertId();
 		
@@ -70,9 +70,9 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(HttpSession httpSession, int id, String title, String body) {
+	public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {
 		
-		if (httpSession.getAttribute("loginMemberId") == null) {
+		if (httpSession.getAttribute("loginedMemberId") == null) {
 			return ResultData.from("F-A", "로그인 후 이용해주세요");
 		}
 		
@@ -82,16 +82,20 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Util.f("%d번 게시물은 존재하지 않습니다", id));
 		}
 		
-		articleService.modifyArticle(id, title, body);
+		ResultData actorCanModifyRd = articleService.actorCanModify((int) httpSession.getAttribute("loginedMemberId"), article.getMemberId());
 		
-		return ResultData.from("S-1", Util.f("%d번 게시물을 수정했습니다", id));
+		if (actorCanModifyRd.isFail()) {
+			return ResultData.from(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
+		}
+		
+		return articleService.modifyArticle(id, title, body);
 	}
 	
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(HttpSession httpSession, int id) {
 		
-		if (httpSession.getAttribute("loginMemberId") == null) {
+		if (httpSession.getAttribute("loginedMemberId") == null) {
 			return ResultData.from("F-A", "로그인 후 이용해주세요");
 		}
 		
@@ -99,6 +103,10 @@ public class UsrArticleController {
 		
 		if(article == null) {
 			return ResultData.from("F-1", Util.f("%d번 게시물은 존재하지 않습니다", id));
+		}
+		
+		if ((int) httpSession.getAttribute("loginedMemberId") != article.getMemberId()) {
+			return ResultData.from("F-B", "해당 게시물에 대한 권한이 없습니다");
 		}
 		
 		articleService.deleteArticle(id);

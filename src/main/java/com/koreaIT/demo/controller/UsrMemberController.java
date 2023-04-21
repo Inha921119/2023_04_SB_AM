@@ -25,8 +25,12 @@ public class UsrMemberController {
 	// 액션 메서드
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public ResultData<Member> doJoin(HttpSession httpSession, String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			return ResultData.from("F-A", "로그아웃 후 이용해주세요");
+		}
+		
 		if (Util.empty(loginId)) {
 			return ResultData.from("F-1", "아이디를 입력해주세요");
 		}
@@ -56,45 +60,46 @@ public class UsrMemberController {
 	}
 	
 	@RequestMapping("/usr/member/doLogin")
-	@ResponseBody	
-	public ResultData<Member> doLogin(HttpSession httpSession, String loginId, String loginPw) {
+	@ResponseBody
+	public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
 		
-		if (httpSession.getAttribute("loginMemberId") != null) {
-			return ResultData.from("F-1", "로그아웃 후 이용해주세요.");
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			return ResultData.from("F-A", "로그아웃 후 이용해주세요");
 		}
 		
 		if (Util.empty(loginId)) {
-			return ResultData.from("F-2", "아이디를 입력해주세요");
+			return ResultData.from("F-1", "아이디를 입력해주세요");
 		}
 		if (Util.empty(loginPw)) {
-			return ResultData.from("F-3", "비밀번호를 입력해주세요");
+			return ResultData.from("F-2", "비밀번호를 입력해주세요");
 		}
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member == null) {
-			return ResultData.from("F-4", Util.f("%s은(는) 존재하지 않는 아이디입니다.", loginId));
+			return ResultData.from("F-3", Util.f("%s은(는) 존재하지 않는 아이디입니다", loginId));
 		}
 		
 		if (member.getLoginPw().equals(loginPw) == false) {
-			
-			return ResultData.from("F-5", "비밀번호가 일치하지 않습니다.");
+			return ResultData.from("F-4", "비밀번호가 일치하지 않습니다");
 		}
+
+		httpSession.setAttribute("loginedMemberId", member.getId());
 		
-		httpSession.setAttribute("loginMemberId", member.getId());
-		
-		return ResultData.from("S-1", Util.f("%s 회원님 환영합니다.", member.getNickname()));
+		return ResultData.from("S-1", Util.f("%s 회원님 환영합니다~!", member.getNickname()));
 	}
+	
 	@RequestMapping("/usr/member/doLogout")
-	@ResponseBody	
-	public ResultData<Member> doLogout(HttpSession httpSession) {
+	@ResponseBody
+	public ResultData doLogout(HttpSession httpSession) {
 		
-		if (httpSession.getAttribute("loginMemberId") == null) {
-			return ResultData.from("F-1", "로그인 후 이용해주세요");
+		if (httpSession.getAttribute("loginedMemberId") == null) {
+			return ResultData.from("F-A", "로그인 후 이용해주세요");
 		}
 		
-		httpSession.removeAttribute("loginMemberId");
+		httpSession.removeAttribute("loginedMemberId");
 		
-		return ResultData.from("S-1", "정상적으로 로그아웃 되었습니다.");
+		return ResultData.from("S-1", "정상적으로 로그아웃 되었습니다");
 	}
+	
 }
