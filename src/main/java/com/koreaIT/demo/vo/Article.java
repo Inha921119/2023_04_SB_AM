@@ -15,6 +15,6 @@ public class Article {
 	private String title;
 	private String body;
 	
-	private String writerNickName;
+	private String writerName;
 	private boolean actorCanChangeData;
 }

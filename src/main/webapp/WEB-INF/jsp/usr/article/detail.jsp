@@ -25,7 +25,7 @@
 						</tr>
 						<tr>
 							<th>작성자</th>
-							<td>${article.writerNickName }</td>
+							<td>${article.writerName }</td>
 						</tr>
 						<tr>
 							<th>제목</th>

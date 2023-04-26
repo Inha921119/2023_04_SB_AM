@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT *, M.nickName AS writerNickName
+		SELECT *, M.nickName AS writerName
 			FROM article AS A
 			JOIN `member` AS M
 			ON A.memberId = M.id
@@ -30,7 +30,7 @@
 	</select>
 	
 	<select id="getArticles" resultType="Article">
-		SELECT A.id, A.title, A.body, A.regDate, A.memberId, M.nickName AS writerNickName
+		SELECT A.id, A.title, A.body, A.regDate, A.memberId, M.nickName AS writerName
 			FROM article AS A
 			JOIN `member` AS M
 			ON A.memberId = M.id
