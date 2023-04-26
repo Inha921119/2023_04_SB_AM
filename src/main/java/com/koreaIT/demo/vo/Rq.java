@@ -16,13 +16,14 @@ public class Rq {
 	private int loginedMemberId;
 //	private HttpServletRequest req;
 	private HttpServletResponse resp;
+	private HttpSession httpSession;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		
 //		this.req = req;
 		this.resp = resp;
 		
-		HttpSession httpSession = req.getSession();
+		this.httpSession = req.getSession();
 		
 		int loginedMemberId = 0;
 		
@@ -35,6 +36,7 @@ public class Rq {
 
 	public void jsPrintHistoryBack(String msg) {
 		resp.setContentType("text/html; charset=UTF-8;");
+		
 		print(Util.jsHistoryBack(msg));
 	}
 
@@ -45,4 +47,13 @@ public class Rq {
 			e.printStackTrace();
 		}
 	}
+
+	public void login(Member member) {
+		httpSession.setAttribute("loginedMemberId", member.getId());
+	}
+
+	public void logout() {
+		httpSession.removeAttribute("loginedMemberId");
+	}
+	
 }

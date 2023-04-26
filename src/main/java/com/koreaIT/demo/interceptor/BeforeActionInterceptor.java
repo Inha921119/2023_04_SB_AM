@@ -16,10 +16,9 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		Rq rq = new Rq(request, response);
-		request.setAttribute("Rq", rq);
+		request.setAttribute("rq", rq);
 		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
-	
 	
 }
