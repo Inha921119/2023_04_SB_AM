@@ -5,6 +5,11 @@
 <%@ include file="../common/head.jsp" %>
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
+			<c:if test="${rq.getLoginedMemberId() != 0 }">
+				<div class="mb-2 flex justify-end">
+					<a class="btn btn-outline" href="/usr/article/write">WRITE</a>
+				</div>
+			</c:if>
 			<div class="overflow-x-auto">
 				<table class="table w-full">
 					<thead>

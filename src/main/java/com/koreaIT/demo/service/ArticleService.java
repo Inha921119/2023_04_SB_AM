@@ -72,6 +72,15 @@ public class ArticleService {
 		article.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
 	}
 
+//	public ResultData actorCanWrite(int loginedMemberId) {
+//		
+//		if (loginedMemberId == 0) {
+//			return ResultData.from("F-A", "로그인 후 이용가능합니다.");	
+//		}
+//		
+//		return ResultData.from("S-1", "가능");
+//	}
+
 
 	
 }
