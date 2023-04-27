@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreaIT.demo.repository.ArticleRepository;
-import com.koreaIT.demo.util.Util;
 import com.koreaIT.demo.vo.Article;
 import com.koreaIT.demo.vo.ResultData;
 
@@ -32,14 +31,12 @@ public class ArticleService {
 		return articleRepository.getArticleById(id);
 	}
 	
-	public List<Article> getArticles(){
-		return articleRepository.getArticles();
+	public List<Article> getArticles(int boardId){
+		return articleRepository.getArticles(boardId);
 	}
 	
 	public void modifyArticle(int id, String title, String body) {
-		
 		articleRepository.modifyArticle(id, title, body);
-		
 	}
 	
 	public void deleteArticle(int id) {
@@ -71,15 +68,6 @@ public class ArticleService {
 		
 		article.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
 	}
-
-//	public ResultData actorCanWrite(int loginedMemberId) {
-//		
-//		if (loginedMemberId == 0) {
-//			return ResultData.from("F-A", "로그인 후 이용가능합니다.");	
-//		}
-//		
-//		return ResultData.from("S-1", "가능");
-//	}
 
 
 	
