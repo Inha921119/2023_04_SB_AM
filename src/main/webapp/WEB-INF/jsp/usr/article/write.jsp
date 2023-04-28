@@ -13,6 +13,19 @@
 						</colgroup>
 						<tbody>
 							<tr>
+								<th>게시판</th>
+								<td class="flex justify-around">
+									<label for="">
+										<input type='radio' name='boardId' value='1' />
+										공지사항
+									</label>
+									<label for="">
+										<input type='radio' name='boardId' value='2' checked />
+										자유 게시판
+									</label>
+								</td>
+							</tr>
+							<tr>
 								<th>제목</th>
 								<td><input type="text" name="title" placeholder="제목을 입력해주세요"/></td>
 							</tr>
