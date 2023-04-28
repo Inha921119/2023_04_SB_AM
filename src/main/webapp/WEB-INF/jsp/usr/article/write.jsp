@@ -14,12 +14,13 @@
 						<tbody>
 							<tr>
 								<th>게시판</th>
-								<td class="flex justify-around">
-									<label for="">
+								<td>
+									<label>
 										<input type='radio' name='boardId' value='1' />
 										공지사항
 									</label>
-									<label for="">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<label>
 										<input type='radio' name='boardId' value='2' checked />
 										자유 게시판
 									</label>
