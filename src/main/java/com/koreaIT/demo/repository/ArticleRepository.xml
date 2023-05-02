@@ -97,6 +97,12 @@
 			WHERE id = #{id}
 	</update>
 	
+	<update id="increaseHitCount" >
+		UPDATE article
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+	</update>
+	
 	<delete id="deleteArticle">
 		DELETE FROM article
 			WHERE id = #{id}

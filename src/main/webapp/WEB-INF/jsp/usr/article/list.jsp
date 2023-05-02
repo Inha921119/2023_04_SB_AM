@@ -14,7 +14,12 @@
 						     <option value='body'> 내용 </option>
 						     <option value='title,body'> 제목 + 내용 </option>
 						</select>
-						<input class="ml-2 w-80 input input-bordered" type="text" name="searchKeyword" placeholder="검색어를 입력해주세요" maxlength="20"/>
+						<c:if test="${searchKeyword.trim() != '' }">
+							<input class="ml-2 w-80 input input-bordered" type="text" name="searchKeyword" value="${searchKeyword }" maxlength="20"/>
+						</c:if>
+						<c:if test="${searchKeyword.trim() == '' }">
+							<input class="ml-2 w-80 input input-bordered" type="text" name="searchKeyword" placeholder="검색어를 입력해주세요" maxlength="20"/>
+						</c:if>
 						<button class="ml-2 btn btn-outline">검색</button>
 					</form>
 				</div>
@@ -26,6 +31,7 @@
 							<th>날짜</th>
 							<th>제목</th>
 							<th>작성자</th>
+							<th>조회수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,6 +41,7 @@
 								<td>${article.regDate.substring(2,16) }</td>
 								<td><a href="detail?id=${article.id }">${article.title }</a></td>
 								<td>${article.writerName }</td>
+								<td>${article.hitCount }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -53,7 +60,6 @@
 					
 				 	<c:set var="pageBaseUri" value="?boardId=${board.id }&searchKeywordType=${searchKeywordType }&searchKeyword=${searchKeyword }">
 					</c:set>
-					
 					
 					<c:if test="${page == 1  }">
 						<a class="btn btn-sm btn-disabled" >«</a>
