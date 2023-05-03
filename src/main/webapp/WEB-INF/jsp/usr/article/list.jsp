@@ -25,6 +25,13 @@
 				</div>
 			<div class="overflow-x-auto">
 				<table class="table w-full">
+					<colgroup>
+						<col width="60"/>
+						<col width="200"/>
+						<col />
+						<col width="120"/>
+						<col width="60"/>
+					</colgroup>
 					<thead>
 						<tr>
 							<th>번호</th>
