@@ -28,6 +28,15 @@
 							<th>조회수</th>
 							<td><span id="articleDetail_increaseHitCount">${article.hitCount }</span></td>
 						</tr>
+							
+						<tr></tr>
+						<tr>
+							<th>추천</th>
+							<td>
+								<span>${article.sumReactionPoint }개</span>
+							</td>
+						</tr>
+						
 						<tr>
 							<th>작성자</th>
 							<td>${article.writerName }</td>
@@ -44,12 +53,20 @@
 				</table>
 			</div>
 			
-			<div class="btns">
-				<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
-				<c:if test="${article.actorCanChangeData }">
-					<a class="btn btn-outline" href="modify?id=${article.id }">수정</a>
-					<a class="btn btn-outline" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
-				</c:if>
+			<div class="btns flex justify-between items-end">
+				<div class="mt-1">
+					<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
+					<c:if test="${article.actorCanChangeData }">
+						<a class="btn btn-outline" href="modify?id=${article.id }">수정</a>
+						<a class="btn btn-outline" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
+					</c:if>
+				</div>
+				<div class="mt-1">
+					<c:if test="${rq.getLoginedMemberId() != 0 }">
+						<button class="btn btn-outline" onclick="">👍 ${article.goodReactionPoint }</button>
+						<button class="btn btn-outline">👎 ${article.badReactionPoint * -1 }</button>
+					</c:if>
+				</div>
 			</div>
 		</div>
 	</section>
