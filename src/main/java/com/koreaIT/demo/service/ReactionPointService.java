@@ -23,6 +23,10 @@ public class ReactionPointService {
 	public void doInsertReactionPoint(int loginedMemberId, int relId, String relTypeCode, int point) {
 		reactionPointRepository.doInsertReactionPoint(loginedMemberId, relId, relTypeCode, point);		
 	}
+
+	public void doDeleteReactionPoint(int loginedMemberId, int relId, String relTypeCode) {
+		reactionPointRepository.doDeleteReactionPoint(loginedMemberId, relId, relTypeCode);			
+	}
 	
 	
 }

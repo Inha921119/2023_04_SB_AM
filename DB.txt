@@ -247,3 +247,26 @@ SELECT AM.*
 		GROUP BY AM.id
 		ORDER BY AM.id DESC
 		LIMIT #{limitStart}, #{itemsInAPage}
+		
+WITH AM AS (
+	SELECT A.*, M.nickName AS writerName
+		FROM article AS A
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE A.id = 884
+)
+SELECT AM.*
+		, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
+		, IFNULL(SUM(IF(RP.point > 0, RP.point, 0)), 0) AS goodReactionPoint
+		, IFNULL(SUM(IF(RP.point < 0, RP.point, 0)), 0) AS badReactionPoint
+		FROM AM
+		LEFT JOIN reactionPoint AS RP
+		ON RP.relTypeCode = 'article'
+		AND RP.relId = AM.id
+		GROUP BY AM.id
+
+SELECT IFNULL(SUM(`point`), 0) AS sumReactionPoint
+				FROM reactionPoint
+				WHERE memberId = 2
+				AND relId = 855
+				AND relTypeCode = 'article'
