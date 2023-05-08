@@ -1,5 +1,6 @@
 package com.koreaIT.demo.repository;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,5 +17,16 @@ public interface ReactionPointRepository {
 				AND relTypeCode = #{relTypeCode}
 			""")
 	ReactionPoint getReactionPoint(int loginedMemberId, int relId, String relTypeCode);
+
+	@Insert("""
+			INSERT INTO reactionPoint
+				SET regDate = NOW(),
+					updateDate = NOW(),
+					memberId = #{loginedMemberId},
+					relTypeCode = #{relTypeCode},
+					relId = #{relId},
+					`point` = #{point}
+			""")
+	void doInsertReactionPoint(int loginedMemberId, int relId, String relTypeCode, int point);
 	
 }

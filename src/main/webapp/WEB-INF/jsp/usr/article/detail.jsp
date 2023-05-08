@@ -11,8 +11,13 @@
 				relId : ${article.id},
 				relTypeCode : 'article'
 			}, function(data){
-				
-				console.log(data);
+				if (data.data1.sumReactionPoint > 0) {
+					let goodBtn = $('#goodBtn');
+					goodBtn.removeClass( 'btn-outline' );
+				} else if (data.data1.sumReactionPoint < 0) {
+					let badBtn = $('#badBtn');
+					badBtn.removeClass( 'btn-outline' );
+				}
 				
 			}, 'json');
 			
@@ -83,8 +88,8 @@
 				</div>
 				<div class="mt-1">
 					<c:if test="${rq.getLoginedMemberId() != 0 }">
-						<button class="btn btn-outline" onclick="">👍 ${article.goodReactionPoint }</button>
-						<button class="btn btn-outline">👎 ${article.badReactionPoint * -1 }</button>
+						<a id="goodBtn" class="btn btn-outline" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=1">👍 ${article.goodReactionPoint }</a>
+						<a id="badBtn" class="btn btn-outline" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=-1">👎 ${article.badReactionPoint * -1 }</a>
 					</c:if>
 				</div>
 			</div>
