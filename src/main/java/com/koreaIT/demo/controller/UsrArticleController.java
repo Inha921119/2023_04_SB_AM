@@ -28,14 +28,14 @@ public class UsrArticleController {
 
 	private ArticleService articleService;
 	private BoardService boardService;
-	private ReplyService commentService;
+	private ReplyService replyService;
 	private Rq rq;
 
 	@Autowired
-	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService commentService, Rq rq) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, Rq rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
-		this.commentService = commentService;
+		this.replyService = replyService;
 		this.rq = rq;
 	}
 
@@ -94,12 +94,12 @@ public class UsrArticleController {
 		}
 		
 		Article article = articleService.getForPrintArticle(id);
-		List<Reply> commentList = commentService.getReplys(id, "article");
+		List<Reply> replys = replyService.getReplys(id, "article");
 
 		articleService.actorCanChangeData(rq.getLoginedMemberId(), article);
 
 		model.addAttribute("article", article);
-		model.addAttribute("commentList", commentList);
+		model.addAttribute("replys", replys);
 
 		return "usr/article/detail";
 	}
