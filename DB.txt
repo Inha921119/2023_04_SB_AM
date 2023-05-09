@@ -55,8 +55,8 @@ CREATE TABLE reactionPoint(
 	`comment` SMALLINT NOT NULL DEFAULT 0 COMMENT '반응 (좋아요 = +1, 싫어요 = -1)'
 );
 
-# comment 테이블 생성
-CREATE TABLE `comment`(
+# reply 테이블 생성
+CREATE TABLE reply(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -175,8 +175,8 @@ relTypeCode = 'article',
 relId = 884,
 `point` = 1;
 
-# comment 테스트 데이터
-INSERT INTO `comment`
+# reply 테스트 데이터
+INSERT INTO reply
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 3,
@@ -184,8 +184,8 @@ relTypeCode = 'article',
 relId = 884,
 `body` = 11111111111;
 
-# comment 테스트 데이터
-INSERT INTO `comment`
+# reply 테스트 데이터
+INSERT INTO reply
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
@@ -193,8 +193,8 @@ relTypeCode = 'article',
 relId = 885,
 `body` = 11111111111;
 
-# comment 테스트 데이터
-INSERT INTO `comment`
+# reply 테스트 데이터
+INSERT INTO reply
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 1,
@@ -202,8 +202,8 @@ relTypeCode = 'article',
 relId = 881,
 `body` = 11111111111;
 
-# comment 테스트 데이터
-INSERT INTO `comment`
+# reply 테스트 데이터
+INSERT INTO reply
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 3,
@@ -215,7 +215,7 @@ SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
-SELECT * FROM `comment`;
+SELECT * FROM reply;
 
 SELECT LAST_INSERT_ID();
 
@@ -319,16 +319,9 @@ SELECT IFNULL(SUM(`point`), 0) AS sumReactionPoint
 				AND relId = 855
 				AND relTypeCode = 'article'
 
-SELECT *
-	FROM `comment`
-	WHERE memberId = 2
-	AND relId = 882
+SELECT R.*, M.nickName AS writerName 
+	FROM reply AS R
+	JOIN `member` AS M
+	ON R.memberId = M.id
+	WHERE relId = 885
 	AND relTypeCode = 'article'
-	
-INSERT INTO `comment`
-	SET regDate = NOW(),
-		updateDate = NOW(),
-		memberId = 3,
-		relTypeCode = 'article',
-		relId = 882,
-		`body` = '11111111'

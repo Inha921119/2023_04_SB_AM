@@ -32,7 +32,7 @@
 	</script>
 
 	<section class="mt-8 text-xl">
-		<div class="container mx-auto px-3">
+		<div class="container mx-auto px-3 pb-5 border-bottom-line">
 			<div class="table-box-type-1">
 				<table>
 					<colgroup>
@@ -98,6 +98,8 @@
 		</div>
 	</section>
 	
+	
+	
 	<script>
 		function replyWrite_submitForm(form) {
 			form.body.value = form.body.value.trim();
@@ -112,9 +114,16 @@
 		}
 	</script>
 	
-	<section class="mt-5 text-xl">
+	<section class="mt-5 text-xl mb-5">
 		<div class="container mx-auto px-3">
 			<h2>댓글</h2>
+			<c:forEach var="reply" items="${replies }">
+				<div class="py-2 pl-16 border-bottom-line text-base">
+					<div class="font-semibold"><span>${reply.writerName }</span></div>
+					<div class="my-1 text-lg pl-2"><span>${reply.body }</span></div>
+					<div class="text-xs text-gray-400"><span>${reply.regDate }</span></div>
+				</div>
+			</c:forEach>
 			<form action="../reply/doWrite" method="POST" onsubmit="replyWrite_submitForm(this); return false;">
 				<input type="hidden" name="relTypeCode" value="article"/>
 				<input type="hidden" name="relId" value="${article.id }"/>

@@ -12,16 +12,19 @@ import com.koreaIT.demo.vo.Reply;
 public interface ReplyRepository {
 
 	@Select("""
-			SELECT *
-				FROM `comment`
-				WHERE relId = #{relId}
-				AND relTypeCode = #{relTypeCode}
+			SELECT R.*, M.nickName AS writerName 
+				FROM reply AS R
+				INNER JOIN `member` AS M
+				ON R.memberId = M.id
+				WHERE R.relId = #{relId}
+				AND R.relTypeCode = #{relTypeCode}
+				ORDER BY R.id DESC
 			""")
-	List<Reply> getReplys(int relId, String relTypeCode);
+	List<Reply> getReplies(int relId, String relTypeCode);
 	
 	@Select("""
 			SELECT *
-				FROM `comment`
+				FROM reply
 				WHERE memberId = #{loginedMemberId}
 				AND relId = #{relId}
 				AND relTypeCode = #{relTypeCode}
@@ -29,7 +32,7 @@ public interface ReplyRepository {
 	Reply getReply(int loginedMemberId, int relId, String relTypeCode);
 
 	@Insert("""
-			INSERT INTO `comment`
+			INSERT INTO reply
 				SET regDate = NOW(),
 					updateDate = NOW(),
 					memberId = #{loginedMemberId},

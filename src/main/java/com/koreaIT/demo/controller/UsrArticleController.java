@@ -94,12 +94,12 @@ public class UsrArticleController {
 		}
 		
 		Article article = articleService.getForPrintArticle(id);
-		List<Reply> replys = replyService.getReplys(id, "article");
+		List<Reply> replies = replyService.getReplies(id, "article");
 
 		articleService.actorCanChangeData(rq.getLoginedMemberId(), article);
 
 		model.addAttribute("article", article);
-		model.addAttribute("replys", replys);
+		model.addAttribute("replies", replies);
 
 		return "usr/article/detail";
 	}
