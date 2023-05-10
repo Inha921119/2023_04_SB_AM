@@ -94,8 +94,8 @@ public class UsrArticleController {
 		}
 		
 		Article article = articleService.getForPrintArticle(id);
-		List<Reply> replies = replyService.getReplies(id, "article");
-
+		List<Reply> replies = replyService.getReplies(rq.getLoginedMemberId(), id, "article");
+		
 		articleService.actorCanChangeData(rq.getLoginedMemberId(), article);
 
 		model.addAttribute("article", article);

@@ -2,6 +2,7 @@ package com.koreaIT.demo.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -18,7 +19,7 @@ public interface ReplyRepository {
 				ON R.memberId = M.id
 				WHERE R.relId = #{relId}
 				AND R.relTypeCode = #{relTypeCode}
-				ORDER BY R.id DESC
+				ORDER BY R.id;
 			""")
 	List<Reply> getReplies(int relId, String relTypeCode);
 	
@@ -27,7 +28,7 @@ public interface ReplyRepository {
 				FROM reply
 				WHERE memberId = #{loginedMemberId}
 				AND relId = #{relId}
-				AND relTypeCode = #{relTypeCode}
+				AND relTypeCode = #{relTypeCode};
 			""")
 	Reply getReply(int loginedMemberId, int relId, String relTypeCode);
 
@@ -38,12 +39,18 @@ public interface ReplyRepository {
 					memberId = #{loginedMemberId},
 					relTypeCode = #{relTypeCode},
 					relId = #{relId},
-					`body` = #{body}
+					`body` = #{body};
 			""")
 	public void writeReply(int loginedMemberId, int relId, String relTypeCode, String body);
+	
+	@Delete("""
+			DELETE FROM reply
+				WHERE id = #{id}
+			""")
+	public void deleteReply(int loginedMemberId, int relId, int id);
 
 	@Select("""
-			SELECT LAST_INSERT_ID()
+			SELECT LAST_INSERT_ID();
 			""")
 	public int getLastInsertId();
 	

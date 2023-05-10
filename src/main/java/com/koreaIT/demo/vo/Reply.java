@@ -17,4 +17,10 @@ public class Reply {
 	private String writerName;
 	
 	private String body;
+	private boolean actorCanChangeData;
+	
+	public String getForPrintBody() {
+		return this.body.replaceAll("\n", "<br />");
+	}
+
 }

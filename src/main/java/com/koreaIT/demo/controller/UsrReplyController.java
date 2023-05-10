@@ -30,4 +30,13 @@ public class UsrReplyController {
 		
 		return Util.jsReplace(replyWriteRd.getMsg(), Util.f("../article/detail?id=%d", relId));
 	}
+	
+	@RequestMapping("/usr/reply/doDelete")
+	@ResponseBody
+	public String doDelete(int relId, int id) {
+		
+		ResultData<Integer> replyDeleteRd = replyService.deleteReply(rq.getLoginedMemberId(), relId, id);
+		
+		return Util.jsReplace(replyDeleteRd.getMsg(), Util.f("../article/detail?id=%d", relId));
+	}
 }
