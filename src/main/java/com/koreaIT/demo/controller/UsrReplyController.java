@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.demo.service.ReplyService;
 import com.koreaIT.demo.util.Util;
+import com.koreaIT.demo.vo.Reply;
 import com.koreaIT.demo.vo.ResultData;
 import com.koreaIT.demo.vo.Rq;
 
@@ -33,10 +34,18 @@ public class UsrReplyController {
 	
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
-	public String doDelete(int relId, int id) {
-		
-		ResultData<Integer> replyDeleteRd = replyService.deleteReply(rq.getLoginedMemberId(), relId, id);
-		
-		return Util.jsReplace(replyDeleteRd.getMsg(), Util.f("../article/detail?id=%d", relId));
+	public String doDelete(int id) {
+
+		Reply reply = replyService.getReply(id);
+
+		ResultData actorCanMDRd = replyService.actorCanMD(rq.getLoginedMemberId(), reply);
+
+		if (actorCanMDRd.isFail()) {
+			return Util.jsHistoryBack(actorCanMDRd.getMsg());
+		}
+
+		replyService.deleteReply(id);
+
+		return Util.jsReplace(Util.f("%d번 댓글을 삭제했습니다", id), Util.f("../article/detail?id=%d", reply.getRelId()));
 	}
 }

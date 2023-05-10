@@ -22,15 +22,6 @@ public interface ReplyRepository {
 				ORDER BY R.id;
 			""")
 	List<Reply> getReplies(int relId, String relTypeCode);
-	
-	@Select("""
-			SELECT *
-				FROM reply
-				WHERE memberId = #{loginedMemberId}
-				AND relId = #{relId}
-				AND relTypeCode = #{relTypeCode};
-			""")
-	Reply getReply(int loginedMemberId, int relId, String relTypeCode);
 
 	@Insert("""
 			INSERT INTO reply
@@ -43,11 +34,18 @@ public interface ReplyRepository {
 			""")
 	public void writeReply(int loginedMemberId, int relId, String relTypeCode, String body);
 	
+	@Select("""
+			SELECT *
+				FROM reply
+				WHERE id = #{id}
+			""")
+	public Reply getReply(int id);
+
 	@Delete("""
 			DELETE FROM reply
 				WHERE id = #{id}
 			""")
-	public void deleteReply(int loginedMemberId, int relId, int id);
+	public void deleteReply(int id);
 
 	@Select("""
 			SELECT LAST_INSERT_ID();

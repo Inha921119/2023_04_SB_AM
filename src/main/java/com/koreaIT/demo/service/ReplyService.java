@@ -30,10 +30,6 @@ public class ReplyService {
 		
 		return replies;
 	}
-	
-	public Reply getReply(int loginedMemberId, int relId, String relTypeCode) {
-		return replyRepository.getReply(loginedMemberId, relId, relTypeCode);
-	}
 
 	public ResultData<Integer> writeReply(int loginedMemberId, int relId, String relTypeCode, String body) {
 		replyRepository.writeReply(loginedMemberId, relId, relTypeCode, body);		
@@ -43,19 +39,20 @@ public class ReplyService {
 		return ResultData.from("S-1", "댓글 작성이 완료되었습니다.", "id", id);
 	}
 	
-	public ResultData<Integer> deleteReply(int loginedMemberId, int relId, int id) {
-		replyRepository.deleteReply(loginedMemberId, relId, id);		
-		
-		return ResultData.from("S-1", "댓글 삭제가 완료되었습니다.", "id", id);
+	public Reply getReply(int id) {
+		return replyRepository.getReply(id);
 	}
-	
+
+	public void deleteReply(int id) {
+		replyRepository.deleteReply(id);
+	}
 
 	public void actorCanChangeData(int loginedMemberId, Reply reply) {
 		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, reply);
 		reply.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
 	}
 
-	private ResultData actorCanMD(int loginedMemberId, Reply reply) {
+	public ResultData actorCanMD(int loginedMemberId, Reply reply) {
 
 		if (reply == null) {
 			return ResultData.from("F-1", "해당 댓글은 존재하지 않습니다");
