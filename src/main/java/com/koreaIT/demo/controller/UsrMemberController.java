@@ -1,13 +1,22 @@
 package com.koreaIT.demo.controller;
 
+import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.demo.service.MemberService;
 import com.koreaIT.demo.util.Util;
+import com.koreaIT.demo.vo.Article;
 import com.koreaIT.demo.vo.Member;
+import com.koreaIT.demo.vo.Reply;
 import com.koreaIT.demo.vo.ResultData;
 import com.koreaIT.demo.vo.Rq;
 
@@ -105,4 +114,44 @@ public class UsrMemberController {
 		return Util.jsReplace("정상적으로 로그아웃 되었습니다", "/");
 	}
 	
+	@RequestMapping("/usr/member/myPage")
+	public String showMyPage() {
+		return "usr/member/myPage";
+	}
+	
+	@RequestMapping("/usr/member/checkPassword")
+	public String checkPassword() {
+		return "usr/member/checkPassword";
+	}
+	
+	@RequestMapping("/usr/member/doCheckPassword")
+	public String doCheckPassword(String loginPw) {
+		if (Util.empty(loginPw)) {
+			return rq.jsReturnOnView("비밀번호를 입력해주세요", true);
+		}
+		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
+			return rq.jsReturnOnView("비밀번호가 일치하지 않습니다.", true);
+		}
+		
+		return "usr/member/modify";
+	}
+
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(int loginedMemberId, String nickname, String cellphoneNum, String email) {
+		
+		if(Util.empty(nickname)) {
+			return Util.jsHistoryBack("닉네임을 입력해주세요");
+		}
+		if(Util.empty(cellphoneNum)) {
+			return Util.jsHistoryBack("전화번호를 입력해주세요");
+		}
+		if(Util.empty(email)) {
+			return Util.jsHistoryBack("이메일을 입력해주세요");
+		}
+		
+		memberService.modifyMember(rq.getLoginedMemberId(), nickname, cellphoneNum, email);
+
+		return Util.jsReplace("회원정보를 수정했습니다", Util.f("myPage?id=%d", loginedMemberId));
+	}
 }

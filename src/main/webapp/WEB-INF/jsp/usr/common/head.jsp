@@ -33,6 +33,7 @@
 				<li><a class="h-full px-3 flex items-center btn btn btn-ghost normal-case text-xl" href="/usr/member/login"><span>LOGIN</span></a></li>
 			</c:if>
 			<c:if test="${rq.getLoginedMemberId() != 0  }">
+				<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/member/myPage?id=${rq.getLoginedMemberId()}"><span>MYPAGE</span></a></li>
 				<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/member/doLogout"><span>LOGOUT</span></a></li>
 			</c:if>
 		</ul>

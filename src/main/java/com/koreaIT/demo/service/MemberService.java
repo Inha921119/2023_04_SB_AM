@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.koreaIT.demo.repository.MemberRepository;
 import com.koreaIT.demo.util.Util;
+import com.koreaIT.demo.vo.Article;
 import com.koreaIT.demo.vo.Member;
 import com.koreaIT.demo.vo.ResultData;
 
@@ -57,6 +58,30 @@ public class MemberService {
 
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
+	}
+	
+	public ResultData actorCanMD(int loginedMemberId, Member member) {
+		if(member == null) {
+			return ResultData.from("F-1", "해당 회원은 존재하지 않습니다");
+		}
+		
+		if (loginedMemberId != member.getId()) {
+			return ResultData.from("F-B", "해당 회원에 대한 권한이 없습니다");	
+		}
+		
+		return ResultData.from("S-1", "가능");
+	}
+	
+	public void actorCanChangeData(int loginedMemberId, Member member) {
+		
+		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, member);
+		
+		member.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
+		
+	}
+
+	public void modifyMember(int loginedMemberId, String nickname, String cellphoneNum, String email) {
+		memberRepository.modifyMember(loginedMemberId, nickname, cellphoneNum, email);
 	}
 	
 }
