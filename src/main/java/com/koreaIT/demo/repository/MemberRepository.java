@@ -64,5 +64,12 @@ public interface MemberRepository {
 				WHERE id = #{loginedMemberId}
 			""")
 	public void modifyMember(int loginedMemberId, String nickname, String cellphoneNum, String email);
+	
+	@Update("""
+			UPDATE `member`
+				SET	loginPw = #{loginPw}
+				WHERE id = #{loginedMemberId}
+			""")
+	public void doPasswordModify(int loginedMemberId, String loginPw);
 
 }

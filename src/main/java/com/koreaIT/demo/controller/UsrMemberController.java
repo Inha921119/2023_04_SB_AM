@@ -154,4 +154,34 @@ public class UsrMemberController {
 
 		return Util.jsReplace("회원정보를 수정했습니다", Util.f("myPage?id=%d", loginedMemberId));
 	}
+	
+	@RequestMapping("/usr/member/passwordModify")
+	public String passwordModify() {
+		return "usr/member/passwordModify";
+	}
+	
+	@RequestMapping("/usr/member/doPasswordModify")
+	@ResponseBody
+	public String doPasswordModify(String loginPw, String loginPwChk) {
+		
+		if(Util.empty(loginPw)) {
+			return Util.jsHistoryBack("새 비밀번호를 입력해주세요");
+		}
+		if(Util.empty(loginPwChk)) {
+			return Util.jsHistoryBack("새 비밀번호 확인을 입력해주세요");
+		}
+		
+		if(loginPw.equals(loginPwChk) == false) {
+			return Util.jsHistoryBack("비밀번호가 일치하지 않습니다.");
+		}
+		
+		if(loginPw.equals(rq.getLoginedMember().getLoginPw()) == true) {
+			return Util.jsHistoryBack("현재 사용중인 비밀번호 입니다.");
+		}
+		
+		memberService.doPasswordModify(rq.getLoginedMemberId(), loginPw);
+		
+		return Util.jsReplace("비밀번호를 수정했습니다", "myPage");
+	}
+	
 }
