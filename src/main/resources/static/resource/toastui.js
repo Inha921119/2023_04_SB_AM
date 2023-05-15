@@ -1,15 +1,3 @@
-$('select[data-value]').each(function(index, item) {
-	
-	const items = $(item);
-	
-	const defaultValue = items.attr('data-value').trim();
-	
-	if (defaultValue.length > 0 ) {
-		items.val(defaultValue);
-	}
-	
-})
-
 function ToastEditor__init() {
   $('.toast-ui-editor').each(function(index, node) {
     const $node = $(node);
@@ -18,6 +6,7 @@ function ToastEditor__init() {
 
     const editor = new toastui.Editor({
       el: node,
+      previewStyle: 'vertical',
       initialValue: initialValue,
       height:'600px',
       plugins: []

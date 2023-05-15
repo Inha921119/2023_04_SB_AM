@@ -3,6 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="Write" />
 <%@ include file="../common/head.jsp" %>
+
+<script>
+	document.querySelector('#body').insertAdjacentHTML('afterbegin' ,editor.getHtml());
+</script>
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
 			<form action="doWrite" method="POST">
@@ -32,18 +36,18 @@
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="body" placeholder="내용을 입력해주세요"></textarea></td>
-							</tr>
-							<tr>
-								<td colspan="2"><button class="btn btn-outline">작성</button></td>
+								<td><div class="toast-ui-editor"></div>
+									<div id="body"></div>
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			</form>
-			<div class="btns">
-				<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
+			<div class="btns flex justify-between items-end mt-2">
+				<a class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</a>
+				<button class="btn btn-outline">작성</button>
 			</div>
+		</form>
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>
