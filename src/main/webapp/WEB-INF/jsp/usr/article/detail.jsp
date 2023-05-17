@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="Detail" />
 <%@ include file="../common/head.jsp" %>
-
+<%@ include file="../common/toastUiEditorLib.jsp" %>
 	<script>
 		function getReactionPoint() {
 			
@@ -74,21 +74,25 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td>${article.getForPrintBody() }</td>
+							<td>
+								<div class="toast-ui-viewer">
+									<script type="text/x-template">${article.body }</script>
+								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			
 			<div class="btns flex justify-between items-end">
-				<div class="mt-1">
+				<div class="mt-2">
 					<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
 					<c:if test="${article.actorCanChangeData }">
 						<a class="btn btn-outline" href="modify?id=${article.id }">수정</a>
 						<a class="btn btn-outline" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
 					</c:if>
 				</div>
-				<div class="mt-1">
+				<div class="mt-2">
 					<c:if test="${rq.getLoginedMemberId() != 0 }">
 						<a id="goodBtn" class="btn btn-outline" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=1">👍 ${article.goodReactionPoint }</a>
 						<a id="badBtn" class="btn btn-outline" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=-1">👎 ${article.badReactionPoint * -1 }</a>
