@@ -3,70 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="Write" />
 <%@ include file="../common/head.jsp" %>
-
-<script>
-	function ToastEditor__init() {
-	  $('.toast-ui-editor').each(function(index, node) {
-	    const $node = $(node);
-	    const $initialValueEl = $node.find(' > script');
-	    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
-
-	    const editor = new toastui.Editor({
-	      el: node,
-	      initialValue: initialValue,
-	      height:'600px',
-	      plugins: []
-	    });
-
-	    $node.data('data-toast-editor', editor);
-	  });
-	}
-	function ToastEditorView__init() {
-	  $('.toast-ui-viewer').each(function(index, node) {
-	    const $node = $(node);
-	    const $initialValueEl = $node.find(' > script');
-	    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
-	    $node.empty();
-
-	    var viewer = new toastui.Editor.factory({
-	      el: node,
-	      initialValue: initialValue,
-	      viewer:true,
-	      plugins: []
-	    });
-
-	    $node.data('data-toast-editor', viewer);
-	  });
-	}
-
-	$(function() {
-	  ToastEditor__init();
-	  ToastEditorView__init();
-	});
-	
-	function submitForm(form){
-		  form.title.value = form.title.value.trim();
-		  
-		  if(form.title.value.length == 0){
-		    alert('제목을 입력해주세요');
-		    form.title.focus();
-		    return;
-		  }
-		  
-		  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
-		  const html = editor.getHTML().trim();
-		  
-		  if(html.length == 0){
-		    alert('내용을 입력해주세요');
-		    editor.focus();
-		    return;
-		  }
-		  
-		  form.body.value = html;
-		  
-		  form.submit();
-	}
-</script>
+<%@ include file="../common/toastUiEditorLib.jsp" %>
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
 			<form action="doWrite" method="POST" onsubmit="submitForm(this); return false;">
@@ -92,11 +29,15 @@
 							</tr>
 							<tr>
 								<th>제목</th>
-								<td><input type="text" name="title" placeholder="제목을 입력해주세요"/></td>
+								<td><input class="input input-bordered w-full" type="text" name="title" placeholder="제목을 입력해주세요"/></td>
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><div id="body" class="toast-ui-editor"></div>
+								<td>
+									<div class="toast-ui-editor">
+										<script type="text/x-template"></script>
+									</div>
+									<input name="body" type="hidden" />
 								</td>
 							</tr>
 						</tbody>
