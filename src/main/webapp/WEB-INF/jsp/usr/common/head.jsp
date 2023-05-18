@@ -68,6 +68,8 @@
 				<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/member/myPage?id=${rq.getLoginedMemberId()}"><span>MYPAGE</span></a></li>
 				<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/member/doLogout"><span>LOGOUT</span></a></li>
 			</c:if>
+			<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/home/APITest"><span>API1</span></a></li>
+			<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/home/APITest2"><span>API2</span></a></li>
 		</ul>
 		</div>
 	</div>
