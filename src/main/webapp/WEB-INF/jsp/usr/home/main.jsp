@@ -11,6 +11,18 @@
 			<div>
 				안녕하세요
 			</div>
+			<span class="modal-exam">모달예시</span>
+			<br />
+			<span class="popUp-exam">팝업예시</span>
+			
+			<div class="layer-bg"></div>
+			<div class="layer">
+				<h1>MODAL</h1>
+				<span class="close-x-btn">&times;</span>
+				<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia recusandae dolore in repellat ipsum beatae porro nihil libero nemo corrupti veritatis officiis at earum totam praesentium ad corporis omnis mollitia?</div>
+				<button class="btn btn-outline close-btn">CLOSE</button>
+			</div>
+			
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>
