@@ -153,8 +153,8 @@
 					</table>
 				</div>
 			<div class="btns flex justify-between items-end mt-2">
-				<a class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</a>
-				<button class="btn btn-outline" type="button">회원가입</button>
+				<a class="btn btn-outline" onclick="history.back();">뒤로가기</a>
+				<button class="btn btn-outline">회원가입</button>
 			</div>
 		</form>
 		</div>
