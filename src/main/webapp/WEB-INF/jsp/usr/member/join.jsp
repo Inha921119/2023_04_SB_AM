@@ -32,7 +32,7 @@
 		
 		form.loginPwChk.value = form.loginPwChk.value.trim();
 		if (form.loginPwChk.value.length == 0) {
-			alert('비밀번호 확인을 입력해주세요');
+			alert('비밀번호 확인을 입력해주세요'); 
 			form.loginPwChk.focus();
 			return;
 		}
