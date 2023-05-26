@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
@@ -19,35 +19,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 <link rel="stylesheet" href="/resource/common.css" />
 <script src="/resource/common.js" defer="defer"></script>
-<!-- 토스트 UI 에디터 코어 -->
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<!-- 토스트 UI 에디터 플러그인, 컬러피커 -->
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.css" />
-<script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
-<link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css" />
-<script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
 
-<!-- 토스트 UI 차트 -->
-<link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.css">
-<script src="https://uicdn.toast.com/chart/latest/toastui-chart.js"></script>
-<!-- 토스트 UI 차트와 토스트 UI 에디터를 연결  -->
-<script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.min.js"></script>
-
-<!-- 토스트 UI 에디터 플러그인, 코드 신텍스 하이라이터 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
-<link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css">
-<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
-
-<!-- 토스트 UI 에디터 플러그인, 테이블 셀 병합 -->
-<script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
-
-<!-- 토스트 UI 에디터 플러그인, katex -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.13/katex.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.13/katex.min.css">
-
-<!-- 토스트 UI 에디터 플러그인, UML -->
-<script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.min.js"></script>
+<script>
+	function Theme_toggle() {
+		const theme = localStorage.getItem("theme") ?? "light";
+		
+		if (theme == 'light') {
+			localStorage.setItem("theme", "dark");
+		} else {
+			localStorage.setItem("theme", "light");
+		}
+		
+		location.reload();
+	}
+	
+	function Theme_applyTo(themeName) {
+		$('html').attr('data-theme', themeName);
+	}
+	
+	function Theme_init() {
+		const theme = localStorage.getItem("theme") ?? "light";
+		Theme_applyTo(theme);
+	}
+	
+	Theme_init();
+	
+</script>
 
 </head>
 <body>
@@ -57,6 +54,12 @@
 		</div>
 		<div class="flex-none">
 		<ul class="menu menu-horizontal px-1">
+			<li>
+				<a class="h-full px-3 theme-toggle flex items-center" href="javascript:Theme_toggle();">
+					<span><i class="fa-regular fa-sun"></i></span>
+					<span><i class="fa-solid fa-sun"></i></span>
+				</a>
+			</li>
 			<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/"><span>HOME</span></a></li>
 			<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/article/list?boardId=1"><span>NOTICE</span></a></li>
 			<li><a class="h-full px-3 flex items-center btn btn-ghost normal-case text-xl" href="/usr/article/list?boardId=2"><span>FREE</span></a></li>

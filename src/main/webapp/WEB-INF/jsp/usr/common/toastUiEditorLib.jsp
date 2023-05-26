@@ -1,94 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!-- dompurify -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.0/purify.min.js"></script>
-
 <!-- 토스트 UI 에디터 코어 -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-
+<link rel="stylesheet" href="https://nhn.github.io/tui.editor/latest/dist/cdn/theme/toastui-editor-dark.css">
 <!-- 토스트 UI 에디터 플러그인, 컬러피커 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.css" />
 <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css" />
 <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
-
 <!-- 토스트 UI 차트 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.css">
 <script src="https://uicdn.toast.com/chart/latest/toastui-chart.js"></script>
 <!-- 토스트 UI 차트와 토스트 UI 에디터를 연결  -->
 <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.min.js"></script>
-
 <!-- 토스트 UI 에디터 플러그인, 코드 신텍스 하이라이터 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
 <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css">
 <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
-
 <!-- 토스트 UI 에디터 플러그인, 테이블 셀 병합 -->
 <script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
-
 <!-- 토스트 UI 에디터 플러그인, katex -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.13/katex.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.13/katex.min.css">
-
 <!-- 토스트 UI 에디터 플러그인, UML -->
 <script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.min.js"></script>
 
-<style>
-/* 토스트 UI */
-.absolute {
-	position:absolute;
-}
-
-.relative {
-	position:relative;
-}
-
-.top-0 {
-	top:0;
-}
-
-.left-0 {
-	left:0;
-}
-
-.w-full {
-	width:100%;
-}
-
-.ratio-16\/9::after {
-	content:"";
-	display:block;
-	padding-top:calc(100% / 16 * 9);
-}
-
-.ratio-16\/9::after {
-	content:"";
-	display:block;
-	padding-top:calc(100% / 16 * 9);
-}
-
-.ratio-9\/16::after {
-	content:"";
-	display:block;
-	padding-top:calc(100% / 9 * 16);
-}
-
-.ratio-1\/1::after {
-	content:"";
-	display:block;
-	padding-top:calc(100% / 1 * 1);
-}
-
-.ratio-1\/2::after {
-	content:"";
-	display:block;
-	padding-top:calc(100% / 1 * 2);
-}
-</style>
-
 <script>
-	function getUriParams(uri) {
+function getUriParams(uri) {
 	  uri = uri.trim();
 	  uri = uri.replaceAll('&amp;', '&');
 	  if ( uri.indexOf('#') !== -1 ) {
@@ -276,11 +218,14 @@
 	    const $initialValueEl = $node.find(' > script');
 	    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
 
+	    const theme = localStorage.getItem('theme') ?? "light";
+	    
 	    const editor = new toastui.Editor({
 	      el: node,
 	      previewStyle: 'tab',
 	      initialValue: initialValue,
 	      height:'600px',
+	      theme: theme,
 	      plugins: [
 	        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
 	        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
@@ -308,10 +253,13 @@
 	    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
 	    $node.empty();
 
+	    const theme = localStorage.getItem('theme') ?? "light";
+	    
 	    let viewer = new toastui.Editor.factory({
 	      el: node,
 	      initialValue: initialValue,
 	      viewer:true,
+	      theme: theme,
 	      plugins: [
 	        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
 	        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
@@ -336,27 +284,27 @@
 	  ToastEditor__init();
 	  ToastEditorView__init();
 	});
-	
-	function submitForm(form){
-		  form.title.value = form.title.value.trim();
-		  
-		  if(form.title.value.length == 0){
-		    alert('제목을 입력해주세요');
-		    form.title.focus();
-		    return;
-		  }
-		  
-		  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
-		  const markdown = editor.getMarkdown().trim();
-		  
-		  if(markdown.length == 0){
-		    alert('내용을 입력해주세요');
-		    editor.focus();
-		    return;
-		  }
-		  
-		  form.body.value = markdown;
-		  
-		  form.submit();
+
+	function submitForm(form) {
+	  form.title.value = form.title.value.trim();
+	  
+	  if (form.title.value.length == 0) {
+	    alert('제목을 입력해주세요');
+	    form.title.focus();
+	    return;
+	  }
+	  
+	  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	  const markdown = editor.getMarkdown().trim();
+
+	  if (markdown.length == 0) {
+	    alert('내용을 입력해주세요');
+	    editor.focus();
+	    return;
+	  }
+	  
+	  form.body.value = markdown;
+	  
+	  form.submit();
 	}
 </script>
