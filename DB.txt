@@ -66,6 +66,15 @@ CREATE TABLE reply(
 	`body` TEXT NOT NULL
 );
 
+# file 테이블 생성
+CREATE TABLE `file`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+    originName VARCHAR(50) NOT NULL,
+    savedName VARCHAR(100) NOT NULL,
+    savedPath VARCHAR(100) NOT NULL
+);
+
 # article 테스트 데이터
 INSERT INTO article
 SET regDate = NOW(),
